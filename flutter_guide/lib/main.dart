@@ -44,6 +44,8 @@ class _MyAppState extends State<MyApp> {
 
     if (_questionIndex < questions.length) {
       print('more questions available');
+    } else {
+      print('no questions available');
     }
   }
 
@@ -54,15 +56,19 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: Text('This is a title'),
       ),
-      body: Column(
-        children: [
-          Question(questions[_questionIndex]['question']),
-          ...(questions[_questionIndex]['answers'] as List<String>)
-              .map((answer) {
-            return Answer(_answerQuestion, answer);
-          }).toList()
-        ],
-      ),
+      body: _questionIndex < questions.length
+          ? Column(
+              children: [
+                Question(questions[_questionIndex]['question']),
+                ...(questions[_questionIndex]['answers'] as List<String>)
+                    .map((answer) {
+                  return Answer(_answerQuestion, answer);
+                }).toList()
+              ],
+            )
+          : Center(
+              child: Text('You did it'),
+            ),
     ));
   }
 }
