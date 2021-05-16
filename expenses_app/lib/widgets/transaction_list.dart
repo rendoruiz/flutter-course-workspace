@@ -12,54 +12,54 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transactions.map((txn) {
-            return Card(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.pink,
-                        width: 2,
-                      ),
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      '\$${txn.amount}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.pink,
-                      ),
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.pink,
+                      width: 2,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        txn.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    '\$${transactions[index].amount}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.pink,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      transactions[index].title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        DateFormat('yyyy, MMM d').format(txn.date),
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            );
-          }).toList(),
-        ),
+                    ),
+                    Text(
+                      DateFormat('yyyy, MMM d')
+                          .format(transactions[index].date),
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: transactions.length,
       ),
     );
   }
