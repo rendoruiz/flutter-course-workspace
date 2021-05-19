@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => CategoriesPage(),
         CategoryMealsPage.routeName: (ctx) => CategoryMealsPage(),
-        //MealDetailPage.routeName: (ctx) => MealDetailPage(),
+        MealDetailPage.routeName: (ctx) => MealDetailPage(),
       },
       onGenerateRoute: (settings) {
         // first fall back
