@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../pages/filters_page.dart';
 
 class MainDrawer extends StatelessWidget {
-  Widget buildListTile(String title, IconData icon, Function tapHandler) {
+  Widget buildListTile(String title, IconData icon, VoidCallback tapHandler) {
     return ListTile(
       leading: Icon(
         icon,
@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: tapHandler(),
+      onTap: tapHandler,
     );
   }
 
