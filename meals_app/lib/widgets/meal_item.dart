@@ -114,7 +114,7 @@ class MealItem extends StatelessWidget {
                       SizedBox(
                         width: 6,
                       ),
-                      Text('${duration} minutes'),
+                      Text('$duration minutes'),
                     ],
                   ),
                   Row(
