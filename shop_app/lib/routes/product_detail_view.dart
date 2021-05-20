@@ -14,7 +14,7 @@ class ProductDetailView extends StatelessWidget {
     final productId = ModalRoute.of(context)?.settings.arguments as String;
     final loadedProduct = Provider.of<Products>(
       context,
-      listen: false, // if data does not update / one-time listener
+      listen: false, // use if data does not update / prevents listener
     ).findById(productId);
 
     return Scaffold(
