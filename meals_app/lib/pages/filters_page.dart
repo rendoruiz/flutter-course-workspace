@@ -6,6 +6,11 @@ import '../widgets/main_drawer.dart';
 class FiltersPage extends StatefulWidget {
   static const routeName = '/filters';
 
+  final Function saveFilters;
+  final Map<String, bool> currentFilters;
+
+  FiltersPage(this.currentFilters, this.saveFilters);
+
   @override
   _FiltersPageState createState() => _FiltersPageState();
 }
@@ -15,6 +20,15 @@ class _FiltersPageState extends State<FiltersPage> {
   var _vegetarian = false;
   var _vegan = false;
   var _lactoseFree = false;
+
+  @override
+  initState() {
+    _glutenFree = widget.currentFilters['gluten'] ?? false;
+    _vegetarian = widget.currentFilters['vegetarian'] ?? false;
+    _vegan = widget.currentFilters['vegan'] ?? false;
+    _lactoseFree = widget.currentFilters['lactose'] ?? false;
+    super.initState();
+  }
 
   Widget _buildSwitchListTile(
     String title,
@@ -35,6 +49,19 @@ class _FiltersPageState extends State<FiltersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Filters'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final selectedFilters = {
+                  'gluten': _glutenFree,
+                  'lactose': _lactoseFree,
+                  'vegetarian': _vegetarian,
+                  'vegan': _vegan,
+                };
+                widget.saveFilters(selectedFilters);
+              },
+              icon: Icon(Icons.save))
+        ],
       ),
       drawer: MainDrawer(),
       body: Column(
