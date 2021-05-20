@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/widgets/product_item.dart';
 
-class ProductsOverviewRoute extends StatelessWidget {
+class ProductsOverviewView extends StatelessWidget {
   final List<Product> loadedProducts = [
     Product(
       id: 'p1',
