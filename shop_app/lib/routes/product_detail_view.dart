@@ -49,7 +49,7 @@ class ProductDetailView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                '\$${loadedProduct.description}',
+                '${loadedProduct.description}',
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
