@@ -36,6 +36,14 @@ class _EditProductViewState extends State<EditProductView> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
+
       setState(() {});
     }
   }
@@ -85,7 +93,7 @@ class _EditProductViewState extends State<EditProductView> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter a value.';
+                      return 'Please enter a title.';
                     } else {
                       return null;
                     }
@@ -104,6 +112,17 @@ class _EditProductViewState extends State<EditProductView> {
                       id: '',
                     );
                   },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a price.';
+                    } else if (double.tryParse(value) == null) {
+                      return 'Please enter a valid number.';
+                    } else if (double.parse(value) <= 0) {
+                      return 'Please enter a number greater than 0.';
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Description'),
@@ -117,6 +136,15 @@ class _EditProductViewState extends State<EditProductView> {
                       imageUrl: _editedProduct.imageUrl,
                       id: '',
                     );
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a description.';
+                    } else if (value.length < 10) {
+                      return 'Should be at least 10 characters long.';
+                    } else {
+                      return null;
+                    }
                   },
                 ),
                 Row(
@@ -161,6 +189,20 @@ class _EditProductViewState extends State<EditProductView> {
                             imageUrl: value ?? '',
                             id: '',
                           );
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter an image url.';
+                          } else if (!value.startsWith('http') &&
+                              !value.startsWith('https')) {
+                            return 'Please enter a valid url.';
+                          } else if (!value.endsWith('.png') &&
+                              !value.endsWith('.jpg') &&
+                              !value.endsWith('.jpeg')) {
+                            return 'Please enter a valid image url.';
+                          } else {
+                            return null;
+                          }
                         },
                       ),
                     ),
