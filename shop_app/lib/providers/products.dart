@@ -65,9 +65,20 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
+  Future<void> fetchAndSetProducts() async {
+    final url = Uri.https(
+        'flutter-test-63fa4-default-rtdb.firebaseio.com', '/products.json');
+    try {
+      final response = await http.get(url);
+      print(jsonDecode(response.body));
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     final url = Uri.https(
-        'flutter-test-63fa4-default-rtdb.firebaseio.com', '/products');
+        'flutter-test-63fa4-default-rtdb.firebaseio.com', '/products.json');
     try {
       final response = await http.post(
         url,
