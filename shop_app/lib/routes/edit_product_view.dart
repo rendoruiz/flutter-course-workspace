@@ -94,7 +94,6 @@ class _EditProductViewState extends State<EditProductView> {
     if (_editedProduct.id.isNotEmpty) {
       await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -126,6 +125,7 @@ class _EditProductViewState extends State<EditProductView> {
     setState(() {
       _isLoading = false;
     });
+    Navigator.of(context).pop();
     // Navigator.of(context).pop();
   }
 
