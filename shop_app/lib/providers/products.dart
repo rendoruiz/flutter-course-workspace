@@ -71,10 +71,15 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    final url = Uri.https('flutter-test-63fa4-default-rtdb.firebaseio.com',
-        '/products.json?auth=$authToken');
+    print(authToken);
+    final url = Uri.https(
+      'flutter-test-63fa4-default-rtdb.firebaseio.com',
+      '/products.json',
+      {'auth': authToken},
+    );
     try {
       final response = await http.get(url);
+      print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;
@@ -101,7 +106,10 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product product) async {
     final url = Uri.https(
-        'flutter-test-63fa4-default-rtdb.firebaseio.com', '/products.json');
+      'flutter-test-63fa4-default-rtdb.firebaseio.com',
+      '/products.json',
+      {'auth': authToken},
+    );
     try {
       final response = await http.post(
         url,
@@ -134,8 +142,11 @@ class Products with ChangeNotifier {
   Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url = Uri.https('flutter-test-63fa4-default-rtdb.firebaseio.com',
-          '/products/$id.json');
+      final url = Uri.https(
+        'flutter-test-63fa4-default-rtdb.firebaseio.com',
+        '/products.json',
+        {'auth': authToken},
+      );
       await http.patch(
         url,
         body: json.encode(
@@ -158,7 +169,10 @@ class Products with ChangeNotifier {
     // keep item to be deleted in memory.
     // add it back if the delete request fails.
     final url = Uri.https(
-        'flutter-test-63fa4-default-rtdb.firebaseio.com', '/products/$id.json');
+      'flutter-test-63fa4-default-rtdb.firebaseio.com',
+      '/products.json',
+      {'auth': authToken},
+    );
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
