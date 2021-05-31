@@ -46,7 +46,7 @@ class ProductItem extends StatelessWidget {
                   product.isFavourite ? Icons.favorite : Icons.favorite_border),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                product.toggleFavouriteStatus(authData.token);
+                product.toggleFavouriteStatus(authData.token, authData.userId);
               },
             ),
           ),

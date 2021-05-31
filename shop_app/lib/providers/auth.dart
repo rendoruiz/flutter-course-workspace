@@ -22,6 +22,10 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  String? get userId {
+    return _userId;
+  }
+
   Future<void> _authenticate(
       String? email, String? password, String urlSegment) async {
     final url = Uri.parse(
@@ -37,7 +41,7 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       final responseData = json.decode(response.body);
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
