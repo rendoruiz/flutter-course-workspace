@@ -71,16 +71,24 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts() async {
-    print(authToken);
+  Future<void> fetchAndSetProducts([var filterByUser = false]) async {
+    final urlFilters = {
+      'auth': authToken,
+      'orderBy': '"addedById"',
+      'equalTo': '"$userId"',
+    };
     var url = Uri.https(
       'flutter-test-63fa4-default-rtdb.firebaseio.com',
       '/products.json',
-      {'auth': authToken},
+      filterByUser
+          ? urlFilters
+          : {
+              'auth': authToken,
+            },
     );
     try {
       final response = await http.get(url);
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;
@@ -130,7 +138,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'price': product.price,
             'imageUrl': product.imageUrl,
-            'isFavourite': product.isFavourite,
+            'addedById': userId,
           },
         ),
       );
