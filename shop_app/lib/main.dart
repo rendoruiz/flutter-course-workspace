@@ -10,6 +10,7 @@ import 'package:shop_app/routes/edit_product_view.dart';
 import 'package:shop_app/routes/orders_view.dart';
 import 'package:shop_app/routes/product_detail_view.dart';
 import 'package:shop_app/routes/products_overview_view.dart';
+import 'package:shop_app/routes/splash_view.dart';
 import 'package:shop_app/routes/user_products_view.dart';
 
 void main() => runApp(MyApp());
@@ -50,7 +51,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductsOverviewView() : AuthView(),
+          home: auth.isAuth
+              ? ProductsOverviewView()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashView()
+                          : AuthView(),
+                ),
           routes: {
             ProductDetailView.routeName: (ctx) => ProductDetailView(),
             CartView.routeName: (ctx) => CartView(),
